@@ -7,9 +7,9 @@ complex neural network architectures with named skip connections and repeatable 
 
 from .circuit import Circuit, SaveInput, GetInput, StartBlock, EndBlock, LambdaLayer
 
-__version__ = "0.1.0"
-__author__ = "torch-circuit contributors"
-__email__ = "your-email@example.com"
+__version__ = "0.9.1"
+__author__ = "ntippens"
+__email__ = "ndtippens@gmail.com"
 
 __all__ = [
     "Circuit",

@@ -24,9 +24,9 @@ def read_requirements():
 
 setup(
     name="torch-circuit",
-    version="0.1.0",
-    author="torch-circuit contributors",
-    author_email="your-email@example.com",
+    version="0.9.1",
+    author="ntippens",
+    author_email="ndtippens@gmail.com",
     description="A PyTorch extension for building neural networks with skip connections and repeatable blocks",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -48,12 +48,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     python_requires=">=3.8",
-    install_requires=[
-        "torch>=1.9.0",
-        "torchvision>=0.10.0",
-        "matplotlib>=3.3.0",
-        "numpy>=1.19.0",
-    ],
+    install_requires=read_requirements(),
     extras_require={
         "dev": [
             "pytest>=6.0",
@@ -69,9 +64,9 @@ setup(
     },
     keywords="pytorch neural-networks deep-learning skip-connections resnet",
     project_urls={
-        "Bug Reports": "https://github.com/your-username/torch-circuit/issues",
-        "Source": "https://github.com/your-username/torch-circuit",
-        "Documentation": "https://github.com/your-username/torch-circuit#readme",
+        "Bug Reports": "https://github.com/ndtippens/torch-circuit/issues",
+        "Source": "https://github.com/ndtippens/torch-circuit",
+        "Documentation": "https://github.com/ndtippens/torch-circuit/",
     },
     include_package_data=True,
     zip_safe=False,
