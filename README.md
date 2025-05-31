@@ -19,7 +19,7 @@ cd torch-circuit
 pip install -e .
 ```
 
-### From PyPI (when published)
+### From PyPI
 
 ```bash
 pip install torch-circuit
