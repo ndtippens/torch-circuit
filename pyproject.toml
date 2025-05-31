@@ -4,17 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "torch-circuit"
-version = "0.1.0"
-description = "A PyTorch extension for building neural networks with skip connections and repeatable blocks"
+version = "0.9.0"
+description = "A PyTorch extension for easy skip connections and repeatable blocks"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "torch-circuit contributors", email = "your-email@example.com"}
+    {name = "ntippens", email = "ndtippens@gmail.com"}
 ]
 maintainers = [
-    {name = "torch-circuit contributors", email = "your-email@example.com"}
+    {name = "ntippens", email = "ndtippens@gmail.com"}
 ]
-keywords = ["pytorch", "neural-networks", "deep-learning", "skip-connections", "resnet"]
+keywords = ["pytorch", "neural-networks", "deep-learning", "skip-connections"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -51,10 +51,10 @@ examples = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-username/torch-circuit"
-Repository = "https://github.com/your-username/torch-circuit"
-Documentation = "https://github.com/your-username/torch-circuit#readme"
-"Bug Reports" = "https://github.com/your-username/torch-circuit/issues"
+Homepage = "https://github.com/ndtippens/"
+Repository = "https://github.com/ndtippens/torch-circuit"
+Documentation = "https://github.com/ndtippens/torch-circuit#readme"
+"Bug Reports" = "https://github.com/ndtippens/torch-circuit/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
