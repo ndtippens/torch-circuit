@@ -73,7 +73,7 @@ class Circuit(nn.Module):
     
     Features:
     - SaveInput/GetInput: Named skip connections
-    - StartRepeat/EndRepeat: Repeatable blocks to avoid manual layer duplication
+    - StartBlock/EndBlock: Repeatable blocks to avoid manual layer duplication
     """
     
     def __init__(self, *layers):
@@ -86,7 +86,7 @@ class Circuit(nn.Module):
         self._expand_repeaters()
     
     def _expand_repeaters(self):
-        """Expand StartRepeat/EndRepeat blocks into actual repeated layers."""
+        """Expand blocks into repeated layers."""
         i = 0
         repeat_stack = []  # Stack to handle nested repeats
         
@@ -94,10 +94,10 @@ class Circuit(nn.Module):
             layer = self.original_layers[i]
             
             if isinstance(layer, StartBlock):
-                # Find matching EndRepeat
-                end_idx = self._find_matching_end_repeat(i, layer.name)
+                # Find matching EndBlock
+                end_idx = self._find_matching_end_block(i, layer.name)
                 if end_idx == -1:
-                    raise ValueError(f"No matching EndRepeat found for StartRepeat '{layer.name}'")
+                    raise ValueError(f"No matching EndBlock found for StartBlock '{layer.name}'")
                 
                 # Get layers to repeat
                 repeat_layers = list(self.original_layers[i+1:end_idx])
@@ -118,20 +118,20 @@ class Circuit(nn.Module):
                             # Regular layer - add as-is
                             self.expanded_layers.append(repeat_layer)
                 
-                # Skip to after EndRepeat
+                # Skip to after EndBlock
                 i = end_idx + 1
             
             elif isinstance(layer, EndBlock):
-                # This should be handled by StartRepeat
-                raise ValueError(f"EndRepeat '{layer.name}' without matching StartRepeat")
+                # This should be handled by StartBlock
+                raise ValueError(f"EndBlock '{layer.name}' without matching StartBlock")
             
             else:
                 # Regular layer - add as-is
                 self.expanded_layers.append(layer)
                 i += 1
     
-    def _find_matching_end_repeat(self, start_idx: int, name: str) -> int:
-        """Find the matching EndRepeat for a StartRepeat."""
+    def _find_matching_end_block(self, start_idx: int, name: str) -> int:
+        """Find the matching EndBlock for a StartBlock."""
         nesting_level = 0
         
         for i in range(start_idx + 1, len(self.original_layers)):
@@ -144,7 +144,7 @@ class Circuit(nn.Module):
                     return i
                 nesting_level -= 1
         
-        return -1  # No matching EndRepeat found
+        return -1  # No matching EndBlock found
     
     def forward(self, x):
         """Forward pass through expanded layers with skip connection support."""
