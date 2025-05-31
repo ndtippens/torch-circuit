@@ -260,9 +260,6 @@ def main():
     circuit_model.visualize(save_path="resnet_circuit.pdf")
     print("Circuit diagram saved as 'resnet_circuit.pdf'")
 
-    # Print circuit structure
-    circuit_model.print_structure()
-
     # Copy weights from standard model to circuit model
     copy_weights_mnist(standard_model, circuit_model)
 
