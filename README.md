@@ -62,9 +62,8 @@ output = model(x)
 # example output:
 # tensor([[ 1.2898,  0.7074, -0.2531, -0.5240, -2.1423,  0.8159,  0.7738,  1.0178,
 #         -0.5311,  1.2696]], grad_fn=<AddmmBackward0>)
-# see examples/resnet_mnist.py for full details & performance comparison
 ```
-
+See examples/resnet_mnist.py for details and a full performance comparison.
 
 ## Key Components
 
