@@ -48,7 +48,7 @@ model = Circuit(
     nn.Conv2d(64, 64, 3, padding=1),
     nn.BatchNorm2d(64),
     nn.ReLU(),
-    GetInput("residual", op=torch.add),  # Add skip connection
+    GetInput("residual", op=torch.add),
     EndBlock("resnet"),
     
     nn.AdaptiveAvgPool2d((1, 1)),
