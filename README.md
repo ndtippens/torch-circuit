@@ -4,10 +4,11 @@ A PyTorch extension for building neural networks with skip connections and repea
 
 ## Features
 
-- **Named Skip Connections**: Easily implement ResNet-style skip connections with named references
-- **Repeatable Blocks**: Define blocks once and repeat them multiple times without code duplication
-- **Visualization**: Generate circuit diagrams of your network architecture
+- **Named Skip Connections**: Easily implement named ResNet-style skip connections
+- **Repeatable Blocks**: Simple, repeatable block definitions
+- **Transformations**: Apply abitrary operations and transformations to skip connections
 - **PyTorch Compatible**: Works seamlessly with existing PyTorch code and training loops
+- **Visualization**: Generate circuit diagrams of your network architecture
 
 ## Installation
 
@@ -40,7 +41,7 @@ model = Circuit(
         
     # Repeatable ResNet block
     StartBlock("resnet", num_repeats=3),
-    SaveInput("residual"),
+    SaveInput("residual", transformation=None),
     nn.Conv2d(64, 64, 3, padding=1),
     nn.BatchNorm2d(64),
     nn.ReLU(),
@@ -55,17 +56,15 @@ model = Circuit(
     nn.Linear(64, 10)
 )
 
-# Identical model as standard PyTorch
+# Produces standard PyTorch model
 x = torch.randn(1, 3, 32, 32)
 output = model(x)
 # example output:
 # tensor([[ 1.2898,  0.7074, -0.2531, -0.5240, -2.1423,  0.8159,  0.7738,  1.0178,
 #         -0.5311,  1.2696]], grad_fn=<AddmmBackward0>)
-# see examples/resnet_mnist.py for a full performance comparison
-
-# Visualize the architecture
-model.visualize(save_path="resnet_example.pdf")
+# see examples/resnet_mnist.py for full details & performance comparison
 ```
+
 
 ## Key Components
 
@@ -75,8 +74,8 @@ The main container class that supports skip connections and repeatable blocks.
 
 ### SaveInput / GetInput
 
-- `SaveInput(name)`: Save the input tensor with a given name
-- `GetInput(name, op=torch.add)`: Retrieve saved tensor and combine it with the current tensor using an operation (e.g. addition, concatenation)
+- `SaveInput(name, transformation=None)`: Save the input tensor with a given name
+- `GetInput(name, op=torch.add, transformation=None)`: Retrieve saved tensor and combine it with the current tensor using an operation (e.g. addition, concatenation). Optionally, you may also transform the retrieved tensor before combining it with the current tensor.
 
 ### StartBlock / EndBlock
 
@@ -94,24 +93,20 @@ See the `examples/` directory for a complete example demonstrating equivalence t
 torch-circuit can generate simple visual diagrams of your network architecture:
 
 ```python
-model.visualize(save_path="architecture.pdf")
+model.visualize(save_path="example.png")
 ```
+![Example Circuit](https://github.com/ndtippens/torch-circuit/blob/main/examples/example.png)
 
 ## Advanced Usage
 
 ### Custom Operations
 
-You can use custom operations for combining skip connections:
+You can use arbitrary operations for combining skip connections:
 
 ```python
-# Element-wise multiplication instead of addition
+# Concatenate residual signals in a specified dimension
+GetInput("residual", op=lambda x, y: torch.cat((x, y), dim=1))
+
+# Element-wise multiplication
 GetInput("residual", op=torch.mul)
-
-# Custom lambda function
-GetInput("residual", op=lambda x, y: x + 0.5 * y)
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
