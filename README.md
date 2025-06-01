@@ -14,12 +14,12 @@ A PyTorch extension for building neural networks with skip connections and repea
 ### From Source
 
 ```bash
-git clone https://github.com/your-username/torch-circuit.git
+git clone https://github.com/ndtippens/torch-circuit.git
 cd torch-circuit
 pip install -e .
 ```
 
-### From PyPI (when published)
+### From PyPI
 
 ```bash
 pip install torch-circuit
@@ -55,9 +55,13 @@ model = Circuit(
     nn.Linear(64, 10)
 )
 
-# Use like any PyTorch model
+# Identical model as standard PyTorch
 x = torch.randn(1, 3, 32, 32)
 output = model(x)
+# example output:
+# tensor([[ 1.2898,  0.7074, -0.2531, -0.5240, -2.1423,  0.8159,  0.7738,  1.0178,
+#         -0.5311,  1.2696]], grad_fn=<AddmmBackward0>)
+# see examples/resnet_mnist.py for a full performance comparison
 
 # Visualize the architecture
 model.visualize(save_path="resnet_example.pdf")
